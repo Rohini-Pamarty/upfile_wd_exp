@@ -1,0 +1,5 @@
+<p>URL</p>
+<%= @filedetail.fdata.original_filename %>
+<p><%= link_to "#{@filedetail.fdata.url}", autheticate_filedetails_path(:id => @filedetail.id) %></p>
+<p>Password</p>
+<p><%= @filedetail.fdata_password %></p>

@@ -1,0 +1,9 @@
+The delete method essentially deletes a row (or an array of rows) from the database. Destroy on the other hand allows for a few more options. First, it will check any callbacks such as before_delete, or any dependencies that we specify in our model. Next, it will keep the object that just got deleted in memory; this allows us to leave a message saying something like “Order #{order.id} has been deleted.” Lastly, and most importantly, it will also delete any child objects associated with that object!
+
+
+
+Basically "delete" sends a query directly to the database to delete the record. In that case Rails doesn't know what attributes are in the record it is deleteing nor if there are any callbacks (such as before_destroy).
+
+
+You would want to use "delete" if you don't want the callbacks to be triggered or you want better performance. Otherwise (and most of the time) you will want to use "destroy".
+

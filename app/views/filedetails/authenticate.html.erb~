@@ -1,0 +1,7 @@
+<%= form_tag(download_filedetails_path, :method => :get) %>
+enter password for file
+<%= @filedetails.fdata.original_filename %>
+<%= label_tag :Enter_password %>
+<%= text_field_tag :password %>
+<%= submit_tag %>
+<% end %>

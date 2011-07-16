@@ -1,0 +1,37 @@
+create view wall as select * from((select photo_name, creation_time from photos where (current_timestamp-creation_time)/(24*60*60)<1) union (select title, creation_date from albums where (current_timestamp-creation_date)/(24*60*60)<1)union (select title, creation_time from  videos where (current_timestamp-creation_time)/(24*60*60)<1));
+
+create view wall as
+select photo_name as Name,
+	creation_time as creation
+	from photos where (current_timestamp-creation_time)/(24*60*60)<2
+union
+	select title as Name,
+	creation_date as creation
+	from albums where (current_timestamp-creation_date)/(24*60*60)<2
+union
+	select title as Name,
+	creation_time as creation
+	from videos where (current_timestamp-creation_time)/(24*60*60)<2
+
+
+create view wall as
+select * from album_photo
+union
+	select title as Name,
+	creation_time as creation
+	from albums where (current_timestamp-creation_time)/(24*60*60)<2)
+
+
+insert into videos(video_id, user_id,source) values (1,1,"abc.mepg");
+insert into videos(video_id, user_id,source) values (1,2,"abc.mepg");
+insert into videos(video_id, user_id,source) values (1,3,"abc.mepg");
+insert into videos(video_id, user_id,source) values (1,4,"abc.mepg");
+insert into videos(video_id, user_id,source) values (1,5,"abc.mepg");
+insert into videos(video_id, user_id,source) values (2,5,"abc.mepg");
+insert into videos(video_id, user_id,source) values (1,6,"abc.mepg");
+insert into videos(video_id, user_id,source) values (1,7,"abc.mepg");
+insert into videos(video_id, user_id,source) values (1,8,"abc.mepg");
+insert into videos(video_id, user_id,source) values (2,8,"abc.mepg");
+insert into videos(video_id, user_id,source) values (1,9,"abc.mepg");
+insert into videos(video_id, user_id,source) values (1,10,"abc.mepg");
+

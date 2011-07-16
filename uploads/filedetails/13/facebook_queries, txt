@@ -1,0 +1,19 @@
+create table user(user_id int primary key,name varchar(50) not null,city varchar(20),    sex varchar(7) not null,birthday date,lang varchar(150),about_me varchar(500),profile_pic_id int,email_id varchar(100) not null,phone_no int,last_login datetime default now(), foreign key(pic_id) references picture(pic_id));
+
+create table friends(relation_id int primary key, user_owner_id int, user_friend_id int, foreign key (user_owner_id) references user(user_id), foreign key(user_friend_id) references user(user_id))
+
+create table albums(album_id int primary key, creation_date timestamp default now(), title varchar(150), user_id int, foreign key(user_id) references user(user_id));
+
+create table photos(photo_id int primary key, photo_name varchar(50) not null, title varchar(150), album_id int,user_id int, foreign key(user_id) references user(user_id), foreign key(album_id) references album(album_id));
+
+create table videos(video_id int primary key, title varchar(150), source varchar(50), user_id int, foreign key(user_id) references user(user_id));
+
+
+create table wall(record_id int primary key auto_increment, user_id int, item_id int, foreign key(user_id) references user(user_id));
+
+create table comment(comment_id int primary key, text varchar(500), on_id int, created_at timestamp default now());
+
+create table like_record(like_id int primary key, user_id int, on_id int, foreign key(user_id) references user(user_id));
+
+
+

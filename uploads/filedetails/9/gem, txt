@@ -1,0 +1,19 @@
+A gem is a packaged Ruby application or library. Ruby code packaged in this manner is called a gem. Gems are managed on your computer using the gem command. You can install, remove, and query (amoung other things) gem packages using the gem command.
+
+
+Creating a gem
+
+The process of turning your code into a gem is a two-part process.The first part is getting your library set up in a directory structure that is suitable for conversion to a gem.
+
+Basic directory structure of a gem
+/project_name/lib: this directory contains all of the Ruby code related to the project. 
+/project_name/pkg: this is where the gem will be generated. 
+/prject_name/tests: this is where any unit or other tests should be stored. 
+/project_name/README: this file should contain a summary of the project—especially the license under which it is being released (feel free to add a separate file for the license). 
+
+Distribution of gems
+
+1)First way is to host the file which people can download and run it.
+2)Another option is to host it at RubyForge.org.
+3)Or we can have our own server and fire gem_server so that gem can be shared with anyone.
+
