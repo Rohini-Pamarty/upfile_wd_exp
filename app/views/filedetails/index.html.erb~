@@ -11,7 +11,7 @@
 <% @filedetail.each do |fd| %>
   <tr>
     <td><%= fd.fdata.original_filename %></td>
-    <td><%= link_to "#{fd.fdata.url}", autheticate_filedetails_path(:id => fd.id) %></td>
+    <td><%= link_to "http://0.0.0.0:3000/filedetails/autheticate?id=#{fd.id}", autheticate_filedetails_path(:id => fd.id) %></td>
      <td><%= fd.fdata_days %></td>
   </tr>
 <% end %>

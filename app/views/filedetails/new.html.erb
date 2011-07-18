@@ -10,22 +10,27 @@
       </ul>
     </div>
   <% end %>
-
+<br/>
 <div>
 	<%= f.label :file %>
-	<%= f.file_field :fdata %>
+	<%= f.file_field :fdata %><br/>
 </div>
+<br/>
 <div>
 	<%= f.label :password %>
-	<%= f.text_field :fdata_password %>
+	<%= f.text_field :fdata_password %><br/>
 </div>
+<br/>
 <div>
-	<%= f.label :days %>
-	<%= f.text_field :fdata_days %>
+	<%= f.label :expiry_date %>
+<%= f.calendar_date_select :fdata_days %>
+	<br/>
 </div>
+<br/>
 
 <div>
 	<%= f.submit %>
+<br/>
 </div>
 
 <% end %>

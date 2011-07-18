@@ -1,0 +1,251 @@
+Differences between Ruby 1.9 and Ruby 1.8
+
+
+1) Change in lambda syntax
+
+Ruby 1.8
+
+l= lambda{|val1,val2| val1*val2}
+puts l.call("hi",5)
+puts l.call(4,5)
+
+Ruby 1.9
+
+irb(main):023:0> l=-> val1,val2 {val1*val2}
+=> #<Proc:0x9ef4e2c@(irb):23 (lambda)>
+irb(main):024:0> puts l.("hi",5)
+hihihihihi
+=> nil
+irb(main):025:0> puts l.(4,5)
+20
+=> nil
+
+
+
+2)Change in characters represention
+
+Characters are represented by single character strings, rather than integers. There is a method ord to get character encoding
+
+Ruby 1.8
+
+?A
+65
+
+Ruby 1.9
+
+irb(main):026:0> ?A
+=> "A"
+irb(main):027:0> ?A.ord
+=> 65
+
+3)short-hand for hash creation
+
+For hash, where symbols act as keys we can write it in short hand.
+{symbol:value} and even older syntax is also supported
+
+irb(main):084:0> {:sym1=>12,:sym2=>13}
+=> {:sym1=>12, :sym2=>13}
+irb(main):085:0> {sym1:12,sym2:13}
+=> {:sym1=>12, :sym2=>13}
+
+
+4) Added functionality to splat operators
+
+In Ruby 1.9 it is possible to flatten an array from any end and any number of times. Whereas in Ruby 1.8 it was possible to flatten only onces and that also only at the end.
+
+irb(main):086:0> a,b,c=*[1,2],3,*[4,5]
+=> [1, 2, 3, 4, 5]
+
+
+In this we have flatten at *[1,2] and also *[4,5]
+
+irb(main):087:0> puts a
+1
+=> nil
+irb(main):088:0> puts b
+2
+=> nil
+irb(main):089:0> puts c
+3
+=> nil
+
+
+5) Changes in Enumerators
+
+The iterator methods of core classes and modules like String, Fixnum, Array, Hash and Enumerable now return an enumerator object when invoked with no block.
+
+for example:
+
+irb(main):100:0> enum_obj=("a"..."z").each
+=> #<Enumerator:0x9f2f5cc>
+
+in this .each is a enumerator method, it is returning Enumerator object to variable enum_obj.
+
+Ruby makes Enumerable::Enumerator core, so there is no need to require "enumerator anymore.
+
+Introduction .to_enum method
+
+irb(main):156:0> num=[9,10,1].to_enum
+=> #<Enumerator:0xa030980>
+irb(main):157:0> num.each do |x|
+irb(main):158:1* puts x
+irb(main):159:1> end
+9
+10
+1
+=> [9, 10, 1]
+
+
+
+6) Changes in block variable scope
+Local variables of a block are no longer visible outside the block. However if a variable (a) already exists (b) is not a block parameter, is not local to the block.
+
+irb(main):133:0> x=12
+=> 12
+irb(main):134:0> [5,4,2].each{|x|}
+=> [5, 4, 2]
+irb(main):135:0> puts x
+12
+=> nil
+
+whereas,
+
+irb(main):136:0> x=12
+=> 12
+irb(main):137:0> [5,4,2].each{|y| x=y}
+=> [5, 4, 2]
+irb(main):138:0> puts x
+2
+=> nil
+
+since in second example 'x' is declared outside of the block itself.
+
+7)Changes in symbols 
+
+Symbols have all the string like properties.
+
+irb(main):139:0> puts :sym.upcase
+SYM
+=> nil
+
+Integers can no longer be used with .to_sym
+irb(main):144:0> 9.to_sym
+NoMethodError: undefined method `to_sym' for 9:Fixnum
+	
+
+
+8)Change in call of proc and lambda
+
+No more need of 'call' keyword to use a proc. And instead of Proc.new() we can use Kernel.proc{}
+
+irb(main):141:0> p=Kernel.proc{|v1,v2| v1*v2}
+=> #<Proc:0xa065acc@(irb):141>
+irb(main):142:0> p.("Hello ",3)
+=> "Hello Hello Hello "
+irb(main):143:0> p.(5,6)
+=> 30
+
+9)Change in inject method
+
+Ruby 1.8
+[9,10].inject{|num1,num2| num1+num2}
+
+Ruby 1.9
+irb(main):147:0> [9,10].inject(:+)
+=> 19
+
+
+10) Break with syntactic sugar
+
+irb(main):180:0> def prime(num)
+irb(main):181:1> x=1
+irb(main):182:1> (2...num).each do |y|
+irb(main):183:2* x=y
+irb(main):184:2> break if(num%x==0)
+irb(main):185:2> end
+irb(main):186:1> if(num%x==0)
+irb(main):187:2> puts "no(?<at> "@"{1} ){0}
+ (?<domain> [a-z]+){0}
+ (?<dot> "."{1}){0}
+(?<on>[a-z]{2,3}){0}t prime"
+irb(main):188:2> else
+irb(main):189:2* puts "prime"
+irb(main):190:2> end
+irb(main):191:1> end
+=> nil
+irb(main):192:0> prime(5)
+prime
+=> nil
+irb(main):193:0> prime(10)
+not prime
+=> nil
+
+
+in this along with the break statement we have included the condition to break.
+
+
+11) Introduction of Fibers
+
+Fibers are light-weight threads with manual, cooperative scheduling, rather than the preemptive scheduling of Ruby 1.8's threads.A fiber gets interrupted only when it yields its execution. So a fiber is a sort of user-managed thread. Threads use pre-emptive scheduling, whereas fibers use cooperative scheduling.
+
+
+irb(main):212:0> s=Fiber.new do
+irb(main):213:1* sum=0
+irb(main):214:1> loop do
+irb(main):215:2* Fiber.yield sum
+irb(main):216:2> puts "enter a num"
+irb(main):217:2> num=gets.chomp.to_i
+irb(main):218:2> sum+=num
+irb(main):219:2> end
+irb(main):220:1> end
+=> #<Fiber:0xa02fd28>
+irb(main):221:0> 5.times{ puts s.resume}
+0
+enter a num
+2
+2
+enter a num
+4
+6
+enter a num
+7
+13
+enter a num
+1
+14
+=> 5
+
+
+12) Many changes in Regexp
+
+Ruby 1.9 introduced named capture group. These named groups sre defined at the beginning of the regexp statement3using a trick which tells the regular expression to look exactly
+0 instances of the group. Which is later recalled using \g element, followed by the name of the group. This is for getting user name from mail id.
+
+user_regexp=%r{
+ (?<username>[a-z]+[0-9]*){0}One huge difference would be the move from Matz's interpreter to YARV, a bytecode virtual machine that helps significantly with performance.
+ (?<domain> [a-z]+){0}
+(?<on>[a-z]{2,3}){0}
+\g<username>@\g<domain>.\g<on>
+}x
+user='prohini_nyros@yahoo.com'
+r=user_regexp.match(user)
+puts r
+puts "username #{r[:username]}  domain  #{r[:domain]}  #{r[:on]}"
+
+
+output:
+
+nyros@yahoo.com
+username nyros  domain  yahoo  com
+
+
+13)One huge difference would be the move from Matz's interpreter to YARV, a bytecode virtual machine that helps significantly with performance.
+
+
+
+
+ 
+
+
+
+

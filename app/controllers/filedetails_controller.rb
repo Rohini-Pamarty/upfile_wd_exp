@@ -27,7 +27,7 @@ class FiledetailsController < ApplicationController
 		flash.discard(:notice)
 		@filedetail=Filedetail.find(params[:id])
 		if(@filedetail.fdata_password == params[:pass])
-			if(((Time.now.utc-@filedetail.created_at)/86400).to_i<@filedetail.fdata_days)
+			if(Date.today<@filedetail.fdata_days)
 				send_file(@filedetail.fdata.path, :type => @filedetail.fdata_content_type, :disposition => 'inline')
 				
 			else

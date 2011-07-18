@@ -16,7 +16,7 @@ ActiveRecord::Schema.define(:version => 20110716063307) do
     t.string   "fdata_file_name"
     t.string   "fdata_content_type"
     t.string   "fdata_password"
-    t.integer  "fdata_days"
+    t.date     "fdata_days"
     t.datetime "created_at"
     t.datetime "updated_at"
   end

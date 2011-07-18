@@ -1,0 +1,110 @@
+A gem is a packaged Ruby application or library. It consists of a name and along with a version. Gems have the ease of easy installation and removal. 
+
+Command to install a gem
+gem install gemname.version.gem
+
+Command to uninstall a gem
+gem uninstall gemname
+
+Creating a gem
+
+The directory structure of a gem is as follows:
+/project_name/lib: this directory contains all of the Ruby code related to the project. 
+/prject_name/tests: this is where any unit or other tests should be stored. 
+/project_name/README: this file should contain a summary of the project.
+
+The basic element which makes creation of gem possible is gem specification file which has a extension of filename.gemspec
+
+So using command
+gem build specificationfilename.gemspec
+This command creates a gem including all the folders of our gem.
+
+
+The basic structure of a gemspec file looks like the following:
+
+# -*- encoding: utf-8 -*-
+ 
+Gem::Specification.new do |s|
+  s.name        = "filename"
+  s.version     = "1.2.2"  
+  s.authors     = ["Author_name"] 
+  s.homepage    = "http://github.com/carlhuda/bundler"
+  s.summary     = "summary description"
+  s.description ="gem description"
+  s.files = ["gem_filespath"]
+  s.email="mailid" 
+  s.required_rubygems_version = ">= 1.3.6"
+  s.rubyforge_project         = "projectname" 
+end
+
+
+Once the gem has been created using above command. It has to be installed. And after which it can be used.
+
+
+Consider a example of gem creation for a getting factorial of a number.
+
+We are creating following directory structure first which is as follows:
+
+1)factorial/lib: This will have our file having code. Suppose the filename is 'display.rb' which is withing this folder having all the required code of our gem. Which is as follows:
+
+module FactGem
+class Fact
+	def initialize(num)
+		@num=num;
+	end
+	def factor()
+		f=1;
+		(2..@num).each {|i| f=f*i}
+		return f;		
+	end
+
+end
+end
+
+2)factorial/test: having our required unit test code in filename unit.rb.
+3)And a file readme.txt for the deatils about the gem.
+
+Next we will create the specification file  which is named as 'factorial.gemspec' follows:
+# -*- encoding: utf-8 -*-
+ 
+Gem::Specification.new do |s|
+  s.name        = "factorial"
+  s.version     = "1.2.2"  
+  s.authors     = ["Rohini"] 
+  s.homepage    = "http://github.com/carlhuda/bundler"
+  s.summary     = "The get factorial of a number"
+  s.description ="basic things"
+  s.files = ["lib/display.rb", "test/unit.rb", "readme.txt"]
+  s.email="abc@gmail.com" 
+  s.required_rubygems_version = ">= 1.3.6"
+  s.rubyforge_project         = "factorial" 
+end
+
+We will create the gem using 
+gem build factorial.gemspec
+
+next we will install that gem for testing in our system.
+gem install factorial.1.2.2.gem
+
+Lets create a file to use that gem suppose that filename is 'check_gem.rb' with following code:
+
+require 'display'
+include FactGem
+num=Fact.new(4)
+puts num.factor()
+
+lets execute this code at terminal:
+ruby check_gem.rb
+
+will generate a output
+120.
+
+
+Once the gem is created sucessfully it could be distributed using one of the following options:
+1)First way is to host the file which people can download and run it.
+2)Another option is to host it at RubyForge.org.
+3)Or we can have our own server and fire gem_server so that gem can be shared with anyone.
+
+
+
+

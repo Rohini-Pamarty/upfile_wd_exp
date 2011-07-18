@@ -1,7 +1,7 @@
 <% form_for @filedetail, :html => { :multipart => true } do |f| %>
   <% if @filedetail.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@filedetails.errors.count, "error") %> prohibited this developer from being saved:</h2>
+      <h2><%= pluralize(@filedetail.errors.count, "error") %> prohibited this developer from being saved:</h2>
 
       <ul>
       <% @filedetail.errors.full_messages.each do |msg| %>
@@ -10,22 +10,26 @@
       </ul>
     </div>
   <% end %>
-
+<br/>
 <div>
 	<%= f.label :file %>
-	<%= f.file_field :fdata %>
+	<%= f.file_field :fdata %><br/>
 </div>
+<br/>
 <div>
 	<%= f.label :password %>
-	<%= f.text_field :fdata_password %>
+	<%= f.text_field :fdata_password %><br/>
 </div>
+<br/>
 <div>
-	<%= f.label :days %>
-	<%= f.text_field :fdata_days %>
+	<%= f.label :expiry_date %>
+	<%= calendar_date_select_includes "silver", :locale => "ja" %><br/>
 </div>
+<br/>
 
 <div>
 	<%= f.submit %>
+<br/>
 </div>
 
 <% end %>
